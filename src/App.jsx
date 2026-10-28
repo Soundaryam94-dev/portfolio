@@ -32,6 +32,12 @@ function Nav({ theme, onToggle }) {
   const resume = profile.links.find((l) => l.label === 'Resume')?.href
   return (
     <>
+      {/* a small introduction at the top left, shown on the Home hero (the other sections open with their own heading) */}
+      <motion.p className={`hello-chip${active === 'home' ? '' : ' away'}`} aria-hidden={active === 'home' ? undefined : true} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }}>
+        <span className="hello-txt">
+          <span className="hello-line"><b>{profile.name}’s</b> Portfolio</span>
+        </span>
+      </motion.p>
       <div className="top-bar">
         <button className="theme-chip" onClick={onToggle} aria-label="Toggle day and night mode" title="Click to switch day / night">
           {theme === 'dark' ? <><svg className="mode-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7Z" /></svg></> : <><svg className="mode-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" /></svg></>}

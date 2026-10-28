@@ -133,7 +133,8 @@ export default function Scene({ pins, children }) {
       pT = clamp01(-r.top / Math.max(1, r.height - (el.clientHeight || window.innerHeight))) // the scene's own height: steady while a phone's address bar moves
       // while the ride is under way (past the very start, before the arrival) the bottom nav steps aside; it returns at the top,
       // at the end of the ride and everywhere else on the page
-      document.documentElement.toggleAttribute('data-riding', pT > 0.012 && pT < 0.96)
+      document.documentElement.toggleAttribute('data-riding', pT > 0.07 && pT < 0.96)
+      document.documentElement.toggleAttribute('data-rode', pT > 0.01) // the ride has begun: the top-left name label steps aside (back at the very top)
       if (pT < 0.9 && performance.now() > jumpUntil) armed = true
       if (armed && pT >= 0.97 && pT > prevT && performance.now() > jumpUntil) {
         armed = false
@@ -257,7 +258,10 @@ export default function Scene({ pins, children }) {
           if (!Number.isFinite(peak)) peak = hy0
           // the cloud rests just above the highest peak beneath it (its bottom only kisses the tops), with room above it for the
           // camera's movement and the rise during the ride; over a peak too tall for that, it is drawn a little smaller (never below 55%)
-          const TOP_ROOM = 10 + 10 + camRoomY, KISS = 0.06
+          // a cloud under the top-left label keeps clear of it (sits just below it), so the label never hides the cloud
+          const chipEl = document.querySelector('.hello-chip:not(.away)'), chipR = chipEl ? chipEl.getBoundingClientRect() : null
+          const underChip = chipR && mid - cw0 / 2 < chipR.right + 12
+          const TOP_ROOM = Math.max(10 + 10 + camRoomY, underChip ? chipR.bottom + 14 + camRoomY : 0), KISS = 0.06
           const ch = Math.max(ch0 * 0.55, Math.min(ch0, (Math.min(peak, hy0) - TOP_ROOM) / (1 - KISS))), cw = ch * (1010 / 402)
           const top0 = Math.max(TOP_ROOM, Math.min(peak, hy0) + ch * KISS - ch)
           // never across the sun (decided in the resting frame too): a cloud that would reach into the sun's disc steps aside
@@ -383,7 +387,7 @@ export default function Scene({ pins, children }) {
       // points back at her, the bubble kept inside the screen. As soon as the ride starts it fades out over a moment (CSS),
       // so it is never left half-transparent over the scene ----
       if (startEl && rider) {
-        const on = p < 0.012
+        const on = camZ + RIDER.ahead < showFrom(MILESTONES[0]) - 0.5 // stays up until the first road card (2015) takes over
         startEl.toggleAttribute('data-off', !on)
         {
           const a = P(0, camZ + RIDER.ahead), hpx = RIDER.h * a.s, wpx = hpx * RIDER.ar // the rider rides on the centre line
@@ -396,10 +400,17 @@ export default function Scene({ pins, children }) {
             startEl.style.setProperty('--tail-x', `${(tipX - left).toFixed(1)}px`)
             startEl.style.transform = `translate3d(${left.toFixed(1)}px, ${(tipY + TAIL).toFixed(1)}px, 0)`
           } else {
-            const tipX = a.x + wpx * 0.55, tipY = a.y - hpx * 0.7 // just right of her shoulder
-            const left = Math.min(Math.max(tipX - 14, 10), W - bw - 44) // the tail sits near the bubble's left end; clear of the progress rail on the right
-            startEl.style.setProperty('--tail-x', `${(tipX - left).toFixed(1)}px`)
-            startEl.style.transform = `translate3d(${left.toFixed(1)}px, ${Math.max(tipY - bh - TAIL, hy + 10).toFixed(1)}px, 0)` // its top stays below the horizon
+            // the whole bubble stays to the right of her (clear of her hand and handlebar); the tail reaches back toward her shoulder
+            // the bubble keeps its size in proportion to the rider: on a short screen (smaller rider) it is drawn smaller too
+            const k = Math.min(1, Math.max(0.7, hpx / 230))
+            const tipX = a.x + wpx * 0.5 + 6, tipY = a.y - hpx * 0.7
+            const left = Math.min(Math.max(tipX + 2 * k, 10), W - bw * k - 44) // the tail's tip 2px out from the bubble's left edge
+            startEl.style.setProperty('--tail-x', `${((tipX - left) / k).toFixed(1)}px`)
+            let top = Math.max(tipY - (bh + TAIL) * k, hy + 10) // its top stays below the horizon
+            // and below the My Projects building if they would meet (short, wide screens)
+            if (arrive) { const ar = arrive.getBoundingClientRect(), host = el.getBoundingClientRect(), ax0 = ar.left - host.left, ax1 = ar.right - host.left, ab = ar.bottom - host.top
+              if (left < ax1 && left + bw * k > ax0 && top < ab) top = ab + 8 }
+            startEl.style.transform = `translate3d(${left.toFixed(1)}px, ${top.toFixed(1)}px, 0) scale(${k.toFixed(3)})`
           }
           startEl.style.zIndex = '2900'
           startEl.setAttribute('data-placed', '')
@@ -593,6 +604,7 @@ export default function Scene({ pins, children }) {
       window.clearTimeout(settle)
       themeWatch.disconnect()
       document.documentElement.removeAttribute('data-riding')
+      document.documentElement.removeAttribute('data-rode')
       document.removeEventListener('click', onLinkJump, true)
       cancelAnimationFrame(raf)
       cancelAnimationFrame(rkRaf)
@@ -651,7 +663,7 @@ export default function Scene({ pins, children }) {
           <div className="blv-start">
             {/* a speech bubble from the rider: a greeting and how to start (text only; the About popup was removed) */}
             <span className="blv-bubble">
-              <b>Hey! I’m {profile.name} <span className="blv-wave" aria-hidden="true">👋</span></b>
+              <span className="blv-hey">Hey! I’m <b>{profile.name}</b> <span className="blv-wave" aria-hidden="true">👋</span></span>
               <span className="blv-role">{profile.role}</span>
               <span className="cue-desk">Scroll to drive through my journey.</span><span className="cue-touch">Swipe up to drive through my journey.</span>
             </span>
