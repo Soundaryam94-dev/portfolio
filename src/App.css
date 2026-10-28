@@ -1464,7 +1464,7 @@ html[data-rode] .hello-chip { opacity: 0 !important; translate: 0 -8px; }
 @media (max-width: 700px) { .hello-line { font-size: 13px; } }
 
 /* the speech bubble about 15% smaller overall (same style: bold heading, small orange role, regular line), with padding to match */
-.blv-bubble { padding: 9px 16px 10px; border-radius: 18px; gap: 2px; max-width: 290px; }
+.blv-bubble { padding: 9px 16px 10px; border-radius: 18px; gap: 2px; max-width: 340px; }
 .blv-bubble b { font-size: .92rem; }
 .blv-bubble .blv-role { font-size: .64rem !important; }
 .blv-bubble > span:not(.blv-wave):not(.blv-role) { font-size: .74rem !important; }
@@ -1475,11 +1475,11 @@ html[data-rode] .hello-chip { opacity: 0 !important; translate: 0 -8px; }
   .blv-bubble > span:not(.blv-wave):not(.blv-role) { font-size: .66rem !important; }
 }
 /* speech bubble, final: every line the same size and weight, only the name bold; the role keeps its orange */
-.blv-bubble .blv-hey, .blv-bubble .blv-role, .blv-bubble > span:not(.blv-wave):not(.blv-role) { font: 500 .82rem/1.3 var(--sans) !important; letter-spacing: 0 !important; text-transform: none !important; }
+.blv-bubble .blv-hey, .blv-bubble .blv-role, .blv-bubble > span:not(.blv-wave):not(.blv-role) { font: 500 .95rem/1.3 var(--sans) !important; letter-spacing: 0 !important; text-transform: none !important; }
 .blv-bubble .blv-hey { color: #13233a; }
 .blv-bubble .blv-hey b { font: inherit; font-weight: 800; }
 .blv-bubble .blv-role { color: #c2410c !important; }
-@media (max-width: 700px) { .blv-bubble .blv-hey, .blv-bubble .blv-role, .blv-bubble > span:not(.blv-wave):not(.blv-role) { font-size: .74rem !important; } }
+@media (max-width: 700px) { .blv-bubble .blv-hey, .blv-bubble .blv-role, .blv-bubble > span:not(.blv-wave):not(.blv-role) { font-size: .84rem !important; } }
 /* the bubble is scaled with the rider from its top-left corner, the point its position and tail are measured from (Scene.jsx) */
 .blv-start { transform-origin: 0 0; }
 /* desktop: a longer, slanted tail whose base sits on the bubble's flat bottom edge (clear of the rounded corner); tip at --tail-x */
