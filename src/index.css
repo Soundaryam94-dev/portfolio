@@ -1,0 +1,75 @@
+/* ---------- Design system ----------
+   Tokens follow the reference portfolio's system: paper / ink / coral palette, one type family (Plus Jakarta Sans, loaded
+   once as a variable font: --sans, --geist and --hand all point to it), one easing curve and one spring curve. */
+:root {
+  --paper: #3f9cf3;
+  --paper-2: #52a8f6;
+  --ink: #13233a;
+  --ink-2: #132a45; /* secondary text: 5:1 on the page blue (was 4.3:1) */
+  --line: rgba(19, 35, 58, .2);
+  --sky: #2f7fd8;
+  --sky-2: #9fd3ff;
+  --sun: #ffd23f;
+  --coral: #ff6b4a;
+  --grass: #4f9e4a;
+  --lilac: #b7a2ff;
+  --card: #fffdf7;
+  --shadow: 0 30px 70px -24px rgba(19, 35, 58, .38), 0 2px 8px rgba(19, 35, 58, .08);
+  --shadow-sm: 0 10px 24px -12px rgba(19, 35, 58, .35);
+  --sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --geist: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --hand: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --gut: clamp(16px, 4vw, 48px);
+  --sec: clamp(72px, 14vh, 180px);
+
+  /* names the rest of the app already uses, mapped onto the system */
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --muted: var(--ink-2);
+  --accent: var(--coral);
+  --border: var(--line);
+
+  --sky1: #7ec8f2; --sky2: #fde7c3; --cloud: #ffffff; --star-op: 0;
+  --hill1: #5f9b4a; --hill2: #7fb560; --hill3: #a5cf86; --tree: #3f7d3a;
+  --wall1: #f1e3c8; --wall2: #e8d6b4; --wall3: #c6623e; --wall4: #e0a15a;
+  --roof1: #b5503a; --roof2: #7a3b2b; --roof3: #9c4a2c;
+  --win: #3b5b86; --sun-op: 1; --moon-op: 0;
+}
+:root[data-theme='dark'] {
+  --paper: #1f4e7a;
+  --paper-2: #265a8a;
+  --ink: #f5f5f5;
+  --ink-2: #cacaca;
+  --line: rgba(240, 240, 240, .16);
+  --sky: #6cb4ff;
+  --coral: #ff8c70;
+  --grass: #7fd27a;
+  --lilac: #cdbdff;
+  --card: #24557f;
+  --shadow: 0 30px 70px -24px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .35);
+  --shadow-sm: 0 10px 24px -12px rgba(0, 0, 0, .7);
+
+  --sky1: #060a18; --sky2: #1b2a47; --cloud: #2c3a58; --star-op: 1;
+  --hill1: #1f3a26; --hill2: #2a4a30; --hill3: #36573a; --tree: #17301d;
+  --wall1: #8c7a64; --wall2: #7a6a58; --wall3: #7a3f33; --wall4: #8a6a40;
+  --roof1: #5a2c25; --roof2: #4a241d; --roof3: #5d3220;
+  --win: #ffd98a; --sun-op: 0; --moon-op: 1;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background .3s, color .3s;
+}
+a { color: inherit; }
+button { font-family: inherit; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

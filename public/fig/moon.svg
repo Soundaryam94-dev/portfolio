@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="lit" cx="38%" cy="34%" r="75%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".55" stop-color="#eef3ff"/>
+      <stop offset="1" stop-color="#c7d6f2"/>
+    </radialGradient>
+    <mask id="crescent">
+      <rect width="200" height="200" fill="#000"/>
+      <circle cx="100" cy="100" r="88" fill="#fff"/>
+      <circle cx="138" cy="74" r="78" fill="#000"/>
+    </mask>
+  </defs>
+  <!-- a crescent: the lit disc with an offset disc cut away, plus a few soft craters on the lit part -->
+  <g mask="url(#crescent)">
+    <circle cx="100" cy="100" r="88" fill="url(#lit)"/>
+    <circle cx="48" cy="118" r="9" fill="#cfdcf3" opacity=".7"/>
+    <circle cx="70" cy="160" r="6" fill="#cfdcf3" opacity=".6"/>
+    <circle cx="36" cy="82" r="5" fill="#d6e1f5" opacity=".6"/>
+    <circle cx="104" cy="172" r="4" fill="#d6e1f5" opacity=".5"/>
+  </g>
+</svg>
